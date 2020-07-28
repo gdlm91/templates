@@ -9,10 +9,11 @@
     "templates": "bin/templates"
   },
   "scripts": {
-    "format": "prettier --write **/*.{js,ts,tsx,json}",
+    "format": "prettier --write **/*.{ts,json}",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
+    "compile:watch": "yarn compile --watch",
     "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
     "build": "yarn format && yarn lint && yarn clean-build && yarn compile && yarn copy-templates",
     "prepublishOnly": "yarn build",
@@ -31,6 +32,7 @@
     "bin"
   ],
   "dependencies": {
+    "@babel/core": "^7.11.5",
     "gluegun": "latest"
   },
   "devDependencies": {

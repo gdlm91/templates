@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { build } from 'gluegun';
 
 /**
@@ -6,12 +7,12 @@ import { build } from 'gluegun';
 async function run(argv) {
   // create a CLI runtime
   const cli = build('templates')
-    // load core commands and extensions
-    .src(__dirname)
-    // .plugins('./node_modules', { matching: 'templates-*', hidden: true })
+    .src(path.resolve(__dirname)) // load core APIs, extensions and commands
+    // .plugins('./node_modules', { matching: 'templates-*', hidden: true }) // load plugins
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
     .create();
+
   // and run it
   const toolbox = await cli.run(argv);
 
