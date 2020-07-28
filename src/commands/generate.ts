@@ -1,4 +1,4 @@
-import { GluegunToolbox } from 'gluegun'
+import { GluegunToolbox } from 'gluegun';
 
 module.exports = {
   name: 'generate',
@@ -7,17 +7,17 @@ module.exports = {
     const {
       parameters,
       template: { generate },
-      print: { info }
-    } = toolbox
+      print: { info },
+    } = toolbox;
 
-    const name = parameters.first
+    const name = parameters.first;
 
     await generate({
       template: 'model.ts.ejs',
       target: `models/${name}-model.ts`,
-      props: { name }
-    })
+      props: { name },
+    });
 
-    info(`Generated file at models/${name}-model.ts`)
-  }
-}
+    info(`Generated file at models/${name}-model.ts`);
+  },
+};
