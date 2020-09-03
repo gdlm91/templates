@@ -7,7 +7,8 @@ import { build } from 'gluegun';
 async function run(argv) {
   // create a CLI runtime
   const cli = build('templates')
-    .src(path.resolve(__dirname)) // load core APIs, extensions and commands
+    .src(path.resolve(__dirname)) // load core commands and extensions
+    .plugins(path.resolve(__dirname, 'plugins')) // load core plugins
     // .plugins('./node_modules', { matching: 'templates-*', hidden: true }) // load plugins
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v

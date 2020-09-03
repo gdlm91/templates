@@ -1,4 +1,4 @@
-import { TemplatesToolbox } from '../types';
+import { TemplatesToolbox } from '../../../types';
 
 const extend = (toolbox: TemplatesToolbox) => {
   toolbox.registerPlugin('templates-webpack').onInit((toolbox) => {

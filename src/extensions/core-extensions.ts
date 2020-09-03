@@ -1,4 +1,4 @@
-import pluginsRegistry from '../core/plugins/plugins-registry';
+import webpackConfig from '../toolbox/webpack';
 import { TemplatesToolbox } from './../types';
 
 /**
@@ -14,7 +14,7 @@ const extend = async (toolbox: TemplatesToolbox) => {
   //   ...toolbox.config.loadConfig(process.cwd(), "templates")
   // }
 
-  toolbox.registerPlugin = (name: string) => pluginsRegistry.registerPlugin(name);
+  toolbox.webpackConfig = () => webpackConfig;
 };
 
 export default extend;

@@ -1,29 +1,25 @@
-import { GluegunCommand } from 'gluegun';
+import { TemplatesCommand } from '../types';
 
-import { TemplatesToolbox } from '../types';
-import pluginsRegistry from '../core/plugins/plugins-registry';
+const COMMAND_NAME = 'init';
 
-const command: GluegunCommand<TemplatesToolbox> = {
-  name: 'init',
+const command: TemplatesCommand = {
+  name: COMMAND_NAME,
   run: async (toolbox) => {
-    const { print } = toolbox;
+    const { print, runtime } = toolbox;
 
     print.info('Templates: initializing project');
 
-    // Executing init commands from all plugins
-    for (const templatesPlugin of pluginsRegistry.getAllPlugins()) {
-      const [name, plugin] = templatesPlugin;
-      const { onInit } = plugin;
+    // first plugin is always the core commands/extensions (templates)
+    const [defaultPlugin, ...plugins] = runtime.plugins;
 
-      if (!onInit) {
-        return;
-      }
+    const initCommands = plugins.reduce((commands, plugin) => {
+      const initCommand = plugin.commands.find((command) => command.name === COMMAND_NAME);
 
-      print.info(`Templates: executing onInit for ${name}`);
+      return initCommand ? [...commands, initCommand] : commands;
+    }, [] as TemplatesCommand[]);
 
-      // resolve possible async command
-      await Promise.resolve(onInit(toolbox));
-    }
+    // execute init command of all our plugins
+    initCommands.forEach((command) => command.run(toolbox));
   },
 };
 
