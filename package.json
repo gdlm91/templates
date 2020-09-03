@@ -9,18 +9,18 @@
     "templates": "bin/templates"
   },
   "scripts": {
+    "build": "run-s clean compile copy-templates",
+    "clean": "rm -rf ./build",
+    "compile": "tsc -p .",
+    "compile:watch": "tsc -p . --watch",
+    "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
+    "copy-templates:watch": "watch 'yarn copy-templates' ./src/templates",
+    "watch": "yarn build && run-p compile:watch copy-templates:watch",
+    "prepublishOnly": "run-s formant lint build",
     "format": "prettier --write **/*.{ts,json}",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
-    "clean-build": "rm -rf ./build",
-    "compile": "tsc -p .",
-    "compile:watch": "yarn compile --watch",
-    "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
-    "build": "yarn format && yarn lint && yarn clean-build && yarn compile && yarn copy-templates",
-    "prepublishOnly": "yarn build",
     "test": "jest",
-    "watch": "jest --watch",
-    "snapupdate": "jest --updateSnapshot",
-    "coverage": "jest --coverage"
+    "test:watch": "jest --watch"
   },
   "files": [
     "tsconfig.json",
@@ -47,10 +47,12 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^24.1.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "watch": "^1.0.2"
   },
   "jest": {
     "preset": "ts-jest",
